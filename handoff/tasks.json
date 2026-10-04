@@ -1,0 +1,425 @@
+[
+  {
+    "id": "S0-README",
+    "sprint": 0,
+    "owner": "Architecture",
+    "points": 2,
+    "dependencies": [],
+    "inputs": "User brief and ownership policy",
+    "outputs": "README.md, LICENSE, repository structure",
+    "falsification": "Missing attribution or mixed MCP/XML-RPC instructions fails review",
+    "acceptance": "All five required README sections present; Build/DevOps boundaries explicit",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S0-ENV",
+    "sprint": 0,
+    "owner": "Development / Build",
+    "points": 3,
+    "dependencies": [
+      "S0-README"
+    ],
+    "inputs": "Python 3.12+ host and package index",
+    "outputs": "pyproject.toml, isolated venv, dependency lock and CI",
+    "falsification": "Unsupported Python or missing optional SDK cannot pass integration",
+    "acceptance": "Install in clean environment, run checks and build wheel",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S0-IPC",
+    "sprint": 0,
+    "owner": "IPC agent",
+    "points": 8,
+    "dependencies": [
+      "S0-ENV"
+    ],
+    "inputs": "Reference execute_code/ping contract and loopback fake server",
+    "outputs": "Typed client, timeout transport, redacted logs, IPC_INTERFACE.md",
+    "falsification": "Disconnect after write must not replay a mutation; malformed success rejected",
+    "acceptance": "Client falsification tests pass; exact True ping and explicit statuses",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S0-MCP",
+    "sprint": 0,
+    "owner": "IPC agent",
+    "points": 5,
+    "dependencies": [
+      "S0-IPC"
+    ],
+    "inputs": "Python MCP SDK and bounded recipe interface",
+    "outputs": "Stdio server, registration instructions and SDK tests",
+    "falsification": "Raw Python tool absent; false/NaN dimensions rejected before IPC",
+    "acceptance": "SDK discovers bounded tools and offline preview through real stdio session",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S0-QA",
+    "sprint": 0,
+    "owner": "QA / Build",
+    "points": 3,
+    "dependencies": [
+      "S0-ENV"
+    ],
+    "inputs": "Notebook and HTML artifact contracts",
+    "outputs": "Notebook/static validation, test-first evidence, CI checks",
+    "falsification": "Saved notebook output, syntax error, missing link and leaked .env fail",
+    "acceptance": "Automated local checks green; CI configuration supplied for Build",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S0-HANDOFF",
+    "sprint": 0,
+    "owner": "Architecture / DevOps",
+    "points": 5,
+    "dependencies": [
+      "S0-IPC"
+    ],
+    "inputs": "Cross-platform topology and ownership",
+    "outputs": "DEVOPS_HANDOFF.md, BUILD_HANDOFF.md, release checklist",
+    "falsification": "Timeout never documented as cancellation; no manufactured endpoint or SHA",
+    "acceptance": "Network, hardware, calibration, recovery and rollout steps reviewable",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S0-IMPORT",
+    "sprint": 0,
+    "owner": "Build environment",
+    "points": 2,
+    "dependencies": [
+      "S0-QA",
+      "S0-HANDOFF"
+    ],
+    "inputs": "Reviewed source archive and checksum",
+    "outputs": "Managed GitHub repository, phase branches and revision",
+    "falsification": "Checksum mismatch or missing source blocks import",
+    "acceptance": "Build verifies archive and records source revision",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S0-WINDOWS",
+    "sprint": 0,
+    "owner": "DevOps",
+    "points": 5,
+    "dependencies": [
+      "S0-IPC",
+      "S0-HANDOFF"
+    ],
+    "inputs": "Windows host, approved account, FreeCAD/addon and SSH route",
+    "outputs": "Version inventory, live doctor output, allow-list evidence",
+    "falsification": "Closed tunnel/disallowed source rejected within documented bound",
+    "acceptance": "Windows GUI connected through approved route; real recovery demonstrated",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S1-CAD",
+    "sprint": 1,
+    "owner": "Curriculum agent",
+    "points": 5,
+    "dependencies": [
+      "S0-IPC"
+    ],
+    "inputs": "Positive length/width/height in millimeters",
+    "outputs": "Constrained sketch and PartDesign pad recipe",
+    "falsification": "Invalid dimensions rejected; duplicate document preserved; solver failure aborts",
+    "acceptance": "Native script asserts zero DOF, valid solid and length\u00d7width\u00d7height volume",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S1-LESSON",
+    "sprint": 1,
+    "owner": "Curriculum agent",
+    "points": 3,
+    "dependencies": [
+      "S1-CAD"
+    ],
+    "inputs": "Recipe and capstone mounting-face rationale",
+    "outputs": "Phase 1 notebook, guide and exercises",
+    "falsification": "First cell missing CAPSTONE target or live execution by default fails",
+    "acceptance": "Offline notebook runs cleanly; learner predicts DOF and checks a pad",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S1-DEMO",
+    "sprint": 1,
+    "owner": "Graphics agent",
+    "points": 5,
+    "dependencies": [
+      "S1-CAD"
+    ],
+    "inputs": "Four-parameter axis-aligned rectangle model",
+    "outputs": "Standalone constraint engine mock and landing workbench",
+    "falsification": "Redundant lock must not reduce DOF twice; locked motion projected out",
+    "acceptance": "Math tests pass; keyboard controls and independent DOF visible",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S1-LIVE",
+    "sprint": 1,
+    "owner": "DevOps / QA",
+    "points": 3,
+    "dependencies": [
+      "S0-WINDOWS",
+      "S1-LESSON"
+    ],
+    "inputs": "Live FreeCAD with clean course document namespace",
+    "outputs": "Solver screenshot, pad volume and replay-guard evidence",
+    "falsification": "Existing course document rejected without destructive overwrite",
+    "acceptance": "Actual FreeCAD solver/solid measurements match the notebook",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S2-CSG",
+    "sprint": 2,
+    "owner": "Curriculum agent",
+    "points": 5,
+    "dependencies": [
+      "S1-CAD"
+    ],
+    "inputs": "Two aligned boxes with bounded overlap",
+    "outputs": "Union/cut/common recipes and native analytic checks",
+    "falsification": "Zero/oversized overlap and null/invalid result fail before acceptance",
+    "acceptance": "Volumes satisfy common+cut=A and union+common=A+B",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S2-LESSON",
+    "sprint": 2,
+    "owner": "Curriculum agent",
+    "points": 3,
+    "dependencies": [
+      "S2-CSG"
+    ],
+    "inputs": "Set-operation vocabulary and dimensions",
+    "outputs": "Phase 2 notebook, mini-project and guide",
+    "falsification": "Visible overlap alone cannot serve as proof of volume identities",
+    "acceptance": "Offline lesson runs; learner predicts and verifies three operations",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S2-DEMO",
+    "sprint": 2,
+    "owner": "Graphics agent",
+    "points": 5,
+    "dependencies": [
+      "S1-DEMO",
+      "S2-CSG"
+    ],
+    "inputs": "2D membership/area equations",
+    "outputs": "Union/difference/intersection engine mock",
+    "falsification": "Disjoint, tangent, containment and identical shapes tested",
+    "acceptance": "Drawn operation and analytic area agree; operations accessible by keyboard",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S2-LIVE",
+    "sprint": 2,
+    "owner": "DevOps / QA",
+    "points": 3,
+    "dependencies": [
+      "S1-LIVE",
+      "S2-LESSON"
+    ],
+    "inputs": "Native Boolean operation scripts and expected values",
+    "outputs": "Real CAD valid-solid counts and volume results",
+    "falsification": "Solver/boolean invalidity blocks phase completion",
+    "acceptance": "All three operations pass native assertions on Windows",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S3-PARAM",
+    "sprint": 3,
+    "owner": "Curriculum agent",
+    "points": 5,
+    "dependencies": [
+      "S2-CSG"
+    ],
+    "inputs": "Strict finite JSON dimension schema",
+    "outputs": "Spreadsheet aliases, expression links and recompute recipe",
+    "falsification": "Unknown keys, booleans, nonfinite values and injected text rejected",
+    "acceptance": "Change/restore a cell and assert recomputed bounds/volume",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S3-LESSON",
+    "sprint": 3,
+    "owner": "Curriculum agent",
+    "points": 3,
+    "dependencies": [
+      "S3-PARAM"
+    ],
+    "inputs": "Validated JSON and expression dependency graph",
+    "outputs": "Phase 3 notebook and parameter exercises",
+    "falsification": "Stale cached dimensions cannot be reported as fresh geometry",
+    "acceptance": "Offline lesson runs; learner explains JSON\u2192cell\u2192expression\u2192recompute",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S3-DEMO",
+    "sprint": 3,
+    "owner": "Graphics agent",
+    "points": 5,
+    "dependencies": [
+      "S2-DEMO",
+      "S3-PARAM"
+    ],
+    "inputs": "Dimensional product and parameter transitions",
+    "outputs": "Live sliders, target/current values and interpolated geometry",
+    "falsification": "Volume stale after slider change or frame-rate-dependent lerp fails",
+    "acceptance": "Math tests validate volume and interpolation; reset restores state",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S3-LIVE",
+    "sprint": 3,
+    "owner": "DevOps / QA",
+    "points": 3,
+    "dependencies": [
+      "S2-LIVE",
+      "S3-LESSON"
+    ],
+    "inputs": "Actual spreadsheet-driven FreeCAD document",
+    "outputs": "Before/after dimensions and expression-link evidence",
+    "falsification": "UI label changes without shape change fail acceptance",
+    "acceptance": "Spreadsheet edit updates physical solid after explicit recompute",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S4-HARDWARE",
+    "sprint": 4,
+    "owner": "Curriculum agent",
+    "points": 8,
+    "dependencies": [
+      "S1-CAD",
+      "S2-CSG",
+      "S3-PARAM"
+    ],
+    "inputs": "Teaching fixture and hardware measurement contract",
+    "outputs": "Parametric mount/bracket and sensor housing, notebook",
+    "falsification": "Overlapping holes, thin walls and cavity collisions rejected",
+    "acceptance": "Typed validated scripts include native shape and dimension checks",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S4-MEASURE",
+    "sprint": 4,
+    "owner": "Hardware integrator / DevOps",
+    "points": 5,
+    "dependencies": [
+      "S0-HANDOFF"
+    ],
+    "inputs": "Actual projector, camera, cables, datum and mounting surface",
+    "outputs": "Measured drawing, model IDs, uncertainty, supported parameter payload",
+    "falsification": "Unmeasured example values cannot be labeled exact fit",
+    "acceptance": "Measurement table complete; schema can represent chosen hardware",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S4-ADAPT",
+    "sprint": 4,
+    "owner": "Development / hardware integrator",
+    "points": 8,
+    "dependencies": [
+      "S4-MEASURE",
+      "S4-HARDWARE"
+    ],
+    "inputs": "Measured hardware outside supported recipe family, if any",
+    "outputs": "Additional tested hole/retention/optical geometry when required",
+    "falsification": "Forcing incompatible hole pattern into current scalar payload rejected",
+    "acceptance": "Extend schema/test/recipe together or record adaptation not required",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S4-DEMO",
+    "sprint": 4,
+    "owner": "Graphics agent",
+    "points": 5,
+    "dependencies": [
+      "S3-DEMO",
+      "S4-HARDWARE"
+    ],
+    "inputs": "Example dimensions and projected layout math",
+    "outputs": "Capstone layout engine mock, clearance readout and disclaimer",
+    "falsification": "Negative cavity clearance cannot show fit success",
+    "acceptance": "Mock explains layout while clearly identifying teaching fixture",
+    "status": "implemented; see QA_REPORT for evidence"
+  },
+  {
+    "id": "S4-FIT",
+    "sprint": 4,
+    "owner": "Hardware integrator / DevOps",
+    "points": 8,
+    "dependencies": [
+      "S3-LIVE",
+      "S4-MEASURE",
+      "S4-ADAPT"
+    ],
+    "inputs": "Measured recipe, fabrication method and load assumptions",
+    "outputs": "Native CAD acceptance, physical coupon and installed fit report",
+    "falsification": "Interference, insufficient engagement, blocked optics/airflow fail",
+    "acceptance": "Hardware engineer signs fit/retention and records actual deviations",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S4-CALIBRATE",
+    "sprint": 4,
+    "owner": "DevOps / application integrator",
+    "points": 8,
+    "dependencies": [
+      "S4-FIT"
+    ],
+    "inputs": "Installed hardware and the projection/capture consumer application",
+    "outputs": "Device modes, calibration transforms, residual and latency report",
+    "falsification": "Changed camera mode or shifted bracket invalidates prior mapping",
+    "acceptance": "Held-out marker errors and latency meet predeclared application thresholds",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S4-PERF",
+    "sprint": 4,
+    "owner": "QA / DevOps",
+    "points": 5,
+    "dependencies": [
+      "S1-DEMO",
+      "S2-DEMO",
+      "S3-DEMO",
+      "S4-DEMO"
+    ],
+    "inputs": "Target display/GPU/browser and 4K viewport",
+    "outputs": "30-second interaction metrics and accessibility checks",
+    "falsification": "Unmeasured 60 FPS claim, overflow or reduced-motion failure rejected",
+    "acceptance": "Record FPS/frame percentiles/DRS; qualify hardware-specific results",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S4-PAGES",
+    "sprint": 4,
+    "owner": "DevOps",
+    "points": 3,
+    "dependencies": [
+      "S0-IMPORT",
+      "S4-PERF"
+    ],
+    "inputs": "Build-provided accepted branch containing /docs",
+    "outputs": "Public Pages URL and all phase navigation checks",
+    "falsification": "Switching local Git branch alone cannot change Pages source",
+    "acceptance": "Set explicit branch/docs source; verify deployment and rollback",
+    "status": "pending external team gate"
+  },
+  {
+    "id": "S4-RELEASE",
+    "sprint": 4,
+    "owner": "Build / DevOps / QA",
+    "points": 3,
+    "dependencies": [
+      "S4-FIT",
+      "S4-CALIBRATE",
+      "S4-PAGES"
+    ],
+    "inputs": "Checksums, QA results and all deployment sign-offs",
+    "outputs": "Accepted versioned curriculum release and operational ownership",
+    "falsification": "Pending external gates cannot be silently marked complete",
+    "acceptance": "Source, native CAD, hardware and deployment evidence approved",
+    "status": "pending external team gate"
+  }
+]

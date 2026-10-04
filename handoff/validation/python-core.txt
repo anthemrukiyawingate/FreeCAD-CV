@@ -1,0 +1,89 @@
+test_auth_header_and_log_redaction (test_client.ConfigurationTests.test_auth_header_and_log_redaction) ... ok
+test_defaults_and_environment (test_client.ConfigurationTests.test_defaults_and_environment) ... ok
+test_reject_nonfinite_nonpositive_and_boolean_timeout (test_client.ConfigurationTests.test_reject_nonfinite_nonpositive_and_boolean_timeout) ... ok
+test_reject_unsafe_or_invalid_endpoint_without_echoing_secrets (test_client.ConfigurationTests.test_reject_unsafe_or_invalid_endpoint_without_echoing_secrets) ... ok
+test_cli_defaults_to_preview (test_client.RecipeAndCliTests.test_cli_defaults_to_preview) ... ok
+test_cli_doctor_returns_failure_exit_for_unreachable (test_client.RecipeAndCliTests.test_cli_doctor_returns_failure_exit_for_unreachable) ... {"attempts": 1, "elapsed_ms": 0.256, "endpoint": "http://127.0.0.1:54803", "error_type": "ConnectionRefusedError", "event": "freecad_rpc", "operation": "ping", "request_id": "2109975873d24675b3c4bdb4a1e3bf1b", "status": "offline"}
+ok
+test_cli_rejects_duplicate_json_keys_before_ipc (test_client.RecipeAndCliTests.test_cli_rejects_duplicate_json_keys_before_ipc) ... ok
+test_preview_never_connects_or_claims_execution (test_client.RecipeAndCliTests.test_preview_never_connects_or_claims_execution) ... ok
+test_recipe_validation_precedes_ipc (test_client.RecipeAndCliTests.test_recipe_validation_precedes_ipc) ... ok
+test_disconnect_after_receipt_never_automatically_retries (test_client.TransportTests.test_disconnect_after_receipt_never_automatically_retries) ... {"attempts": 1, "elapsed_ms": 0.589, "endpoint": "http://127.0.0.1:40215", "error_type": "RemoteDisconnected", "event": "freecad_rpc", "operation": "execute_code", "request_id": "bd7fcb99eb7f436395eb7758dae2b033", "status": "unknown"}
+ok
+test_execute_uses_single_upstream_argument (test_client.TransportTests.test_execute_uses_single_upstream_argument) ... ok
+test_http_error_and_invalid_xml_have_unknown_mutation_outcome (test_client.TransportTests.test_http_error_and_invalid_xml_have_unknown_mutation_outcome) ... {"attempts": 1, "elapsed_ms": 0.616, "endpoint": "http://127.0.0.1:34535", "error_type": "ProtocolError", "event": "freecad_rpc", "operation": "execute_code", "request_id": "0263bb17c25d406f81505e70d6caa520", "status": "unknown"}
+{"attempts": 1, "elapsed_ms": 0.854, "endpoint": "http://127.0.0.1:45379", "error_type": "ExpatError", "event": "freecad_rpc", "operation": "execute_code", "request_id": "fde15c374dcc4b92a483bf49c6850513", "status": "unknown"}
+ok
+test_invalid_code_fails_before_network (test_client.TransportTests.test_invalid_code_fails_before_network) ... ok
+test_known_script_failure_is_not_success (test_client.TransportTests.test_known_script_failure_is_not_success) ... {"attempts": 1, "elapsed_ms": 0.856, "endpoint": "http://127.0.0.1:41231", "error_type": "RemoteExecutionError", "event": "freecad_rpc", "operation": "execute_code", "request_id": "74ef745e96de4004b80d3d93a65e4acb", "status": "error"}
+ok
+test_legacy_remote_timeout_is_unknown (test_client.TransportTests.test_legacy_remote_timeout_is_unknown) ... {"attempts": 1, "elapsed_ms": 0.633, "endpoint": "http://127.0.0.1:45695", "error_type": "RemoteExecutionError", "event": "freecad_rpc", "operation": "execute_code", "request_id": "cc36de7dcc4a4e598c22e23cd7b76d0c", "status": "unknown"}
+ok
+test_malformed_execute_result_is_unknown (test_client.TransportTests.test_malformed_execute_result_is_unknown) ... {"attempts": 1, "elapsed_ms": 0.535, "endpoint": "http://127.0.0.1:42127", "error_type": "InvalidExecutionResponse", "event": "freecad_rpc", "operation": "execute_code", "request_id": "270ad96671ac44babde9e8734295b2d6", "status": "unknown"}
+{"attempts": 1, "elapsed_ms": 0.358, "endpoint": "http://127.0.0.1:44585", "error_type": "InvalidExecutionResponse", "event": "freecad_rpc", "operation": "execute_code", "request_id": "a7b8b60287014b75806d8b800b5db10a", "status": "unknown"}
+{"attempts": 1, "elapsed_ms": 0.342, "endpoint": "http://127.0.0.1:35839", "error_type": "InvalidExecutionResponse", "event": "freecad_rpc", "operation": "execute_code", "request_id": "9fd3c9b9e7374f0aad3d1bed44e6fbae", "status": "unknown"}
+{"attempts": 1, "elapsed_ms": 0.546, "endpoint": "http://127.0.0.1:33697", "error_type": "InvalidExecutionResponse", "event": "freecad_rpc", "operation": "execute_code", "request_id": "aea6983658ef4186bfb1b35f4d7d51df", "status": "unknown"}
+{"attempts": 1, "elapsed_ms": 0.824, "endpoint": "http://127.0.0.1:39493", "error_type": "InvalidExecutionResponse", "event": "freecad_rpc", "operation": "execute_code", "request_id": "d6da4e98fce64d94835c01b39f5700e9", "status": "unknown"}
+ok
+test_ping_accepts_upstream_true_and_returns_serializable_result (test_client.TransportTests.test_ping_accepts_upstream_true_and_returns_serializable_result) ... ok
+test_ping_rejects_truthy_nonboolean (test_client.TransportTests.test_ping_rejects_truthy_nonboolean) ... {"attempts": 1, "elapsed_ms": 0.742, "endpoint": "http://127.0.0.1:33139", "error_type": "InvalidPingResponse", "event": "freecad_rpc", "operation": "ping", "request_id": "9e1cefd1389f42ebb2626917a1c628c7", "status": "error"}
+{"attempts": 1, "elapsed_ms": 0.698, "endpoint": "http://127.0.0.1:39979", "error_type": "InvalidPingResponse", "event": "freecad_rpc", "operation": "ping", "request_id": "8dc0ca34b8da4c388074177b8be8940a", "status": "error"}
+{"attempts": 1, "elapsed_ms": 0.873, "endpoint": "http://127.0.0.1:46067", "error_type": "InvalidPingResponse", "event": "freecad_rpc", "operation": "ping", "request_id": "9b985a0f4e504beda00c5f58770a33ca", "status": "error"}
+{"attempts": 1, "elapsed_ms": 0.77, "endpoint": "http://127.0.0.1:34157", "error_type": "InvalidPingResponse", "event": "freecad_rpc", "operation": "ping", "request_id": "f91bdd066cc747fc88f4c6ae0524a50d", "status": "error"}
+ok
+test_refused_connection_is_offline (test_client.TransportTests.test_refused_connection_is_offline) ... {"attempts": 1, "elapsed_ms": 0.359, "endpoint": "http://127.0.0.1:35447", "error_type": "ConnectionRefusedError", "event": "freecad_rpc", "operation": "execute_code", "request_id": "17691dddda3243788f89da5eadfffbe2", "status": "offline"}
+ok
+test_remote_gui_timeout_is_unknown (test_client.TransportTests.test_remote_gui_timeout_is_unknown) ... {"attempts": 1, "elapsed_ms": 1.558, "endpoint": "http://127.0.0.1:38691", "error_type": "RemoteExecutionError", "event": "freecad_rpc", "operation": "execute_code", "request_id": "1eab2ee1f2a44bf48ba0576456ec433c", "status": "unknown"}
+ok
+test_rpc_fault_is_redacted_and_unknown_for_mutation (test_client.TransportTests.test_rpc_fault_is_redacted_and_unknown_for_mutation) ... ok
+test_timeout_does_not_imply_cancellation_or_retry (test_client.TransportTests.test_timeout_does_not_imply_cancellation_or_retry) ... {"attempts": 1, "elapsed_ms": 40.859, "endpoint": "http://127.0.0.1:34533", "error_type": "TimeoutError", "event": "freecad_rpc", "operation": "execute_code", "request_id": "3b94a525d5cb4ebf94de102c634229de", "status": "unknown"}
+ok
+test_code_cells_must_compile (test_delivery.DeliveryContractTests.test_code_cells_must_compile) ... ok
+test_demo_cannot_depend_on_remote_runtime_or_missing_link (test_delivery.DeliveryContractTests.test_demo_cannot_depend_on_remote_runtime_or_missing_link) ... ok
+test_notebook_requires_capstone_first_and_clean_outputs (test_delivery.DeliveryContractTests.test_notebook_requires_capstone_first_and_clean_outputs) ... ok
+test_release_excludes_environment_caches_and_symlinks (test_delivery.DeliveryContractTests.test_release_excludes_environment_caches_and_symlinks) ... ok
+test_live_is_explicit_and_unknown_outcome_is_preserved (test_mcp_server.MCPToolsTests.test_live_is_explicit_and_unknown_outcome_is_preserved) ... ok
+test_missing_sdk_has_actionable_install_message (test_mcp_server.MCPToolsTests.test_missing_sdk_has_actionable_install_message) ... ok
+test_ping_only_checks_bridge (test_mcp_server.MCPToolsTests.test_ping_only_checks_bridge) ... ok
+test_rejects_code_in_place_of_recipe (test_mcp_server.MCPToolsTests.test_rejects_code_in_place_of_recipe) ... ok
+test_run_defaults_to_offline_preview (test_mcp_server.MCPToolsTests.test_run_defaults_to_offline_preview) ... ok
+test_run_rejects_nonboolean_live_confirmation (test_mcp_server.MCPToolsTests.test_run_rejects_nonboolean_live_confirmation) ... ok
+test_sdk_does_not_coerce_boolean_dimensions (test_mcp_server.MCPToolsTests.test_sdk_does_not_coerce_boolean_dimensions) ... skipped 'Optional MCP SDK is not installed'
+test_sdk_does_not_coerce_live_confirmation (test_mcp_server.MCPToolsTests.test_sdk_does_not_coerce_live_confirmation) ... skipped 'Optional MCP SDK is not installed'
+test_sdk_registers_only_bounded_tools (test_mcp_server.MCPToolsTests.test_sdk_registers_only_bounded_tools) ... skipped 'Optional MCP SDK is not installed; tool-function contracts remain tested'
+test_stdio_handshake_preview_and_live_fake_bridge (test_mcp_server.MCPToolsTests.test_stdio_handshake_preview_and_live_fake_bridge) ... skipped 'Optional MCP SDK is not installed'
+test_deterministic_output_and_parameter_data_round_trip (test_recipes.GeneratedScriptTests.test_deterministic_output_and_parameter_data_round_trip) ... ok
+test_existing_document_is_rejected_without_mutation (test_recipes.GeneratedScriptTests.test_existing_document_is_rejected_without_mutation) ... ok
+test_native_assertions_are_explicit_in_all_phases (test_recipes.GeneratedScriptTests.test_native_assertions_are_explicit_in_all_phases) ... ok
+test_scripts_compile_for_native_python_311 (test_recipes.GeneratedScriptTests.test_scripts_compile_for_native_python_311) ... ok
+test_transaction_failure_aborts_and_recomputes (test_recipes.GeneratedScriptTests.test_transaction_failure_aborts_and_recomputes) ... ok
+test_four_lessons_execute_offline_from_an_unrelated_directory (test_recipes.NotebookContractTests.test_four_lessons_execute_offline_from_an_unrelated_directory) ... ok
+test_bad_phase_is_rejected (test_recipes.ParameterContractTests.test_bad_phase_is_rejected) ... ok
+test_csg_intersection_must_be_partial_and_nonzero (test_recipes.ParameterContractTests.test_csg_intersection_must_be_partial_and_nonzero) ... ok
+test_every_phase_has_a_complete_independent_default (test_recipes.ParameterContractTests.test_every_phase_has_a_complete_independent_default) ... ok
+test_housing_apertures_retain_wall_material (test_recipes.ParameterContractTests.test_housing_apertures_retain_wall_material) ... ok
+test_measurement_example_is_strict_complete_schema (test_recipes.ParameterContractTests.test_measurement_example_is_strict_complete_schema) ... ok
+test_mount_holes_cannot_overlap_one_another (test_recipes.ParameterContractTests.test_mount_holes_cannot_overlap_one_another) ... ok
+test_mount_holes_retain_edge_material_and_clear_upright (test_recipes.ParameterContractTests.test_mount_holes_retain_edge_material_and_clear_upright) ... ok
+test_non_numeric_nonfinite_and_excessive_dimensions_fail_before_ipc (test_recipes.ParameterContractTests.test_non_numeric_nonfinite_and_excessive_dimensions_fail_before_ipc) ... ok
+test_non_object_parameters_are_rejected (test_recipes.ParameterContractTests.test_non_object_parameters_are_rejected) ... ok
+test_unknown_keys_cannot_become_executable_text (test_recipes.ParameterContractTests.test_unknown_keys_cannot_become_executable_text) ... ok
+test_archive_contains_v2_root_and_handoff_without_generated_files (test_release.ReleaseContractTests.test_archive_contains_v2_root_and_handoff_without_generated_files) ... ok
+test_archive_inventory_cannot_escape_repository (test_release.ReleaseContractTests.test_archive_inventory_cannot_escape_repository) ... ok
+test_docs_and_tests_do_not_use_private_example_addresses (test_release.ReleaseContractTests.test_docs_and_tests_do_not_use_private_example_addresses) ... ok
+test_document_links_resolve_inside_repository (test_release.ReleaseContractTests.test_document_links_resolve_inside_repository) ... ok
+test_git_inventory_includes_deleted_but_still_tracked_files (test_release.ReleaseContractTests.test_git_inventory_includes_deleted_but_still_tracked_files) ... ok
+test_ignore_covers_all_generated_categories (test_release.ReleaseContractTests.test_ignore_covers_all_generated_categories) ... ok
+test_local_link_guard_rejects_escape_even_if_file_exists (test_release.ReleaseContractTests.test_local_link_guard_rejects_escape_even_if_file_exists) ... ok
+test_missing_inventory_is_not_a_silent_pass (test_release.ReleaseContractTests.test_missing_inventory_is_not_a_silent_pass) ... ok
+test_no_tracked_generated_files (test_release.ReleaseContractTests.test_no_tracked_generated_files) ... ok
+test_pattern_guard_rejects_nested_generated_paths (test_release.ReleaseContractTests.test_pattern_guard_rejects_nested_generated_paths) ... ok
+test_release_files_are_inside_repository (test_release.ReleaseContractTests.test_release_files_are_inside_repository) ... ok
+test_all_five_sprints_have_concrete_packets (test_task_harness.TaskHarnessTests.test_all_five_sprints_have_concrete_packets) ... ok
+test_packet_contains_test_first_protocol_and_external_gate (test_task_harness.TaskHarnessTests.test_packet_contains_test_first_protocol_and_external_gate) ... ok
+test_unknown_task_is_rejected (test_task_harness.TaskHarnessTests.test_unknown_task_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 66 tests in 0.460s
+
+OK (skipped=4)

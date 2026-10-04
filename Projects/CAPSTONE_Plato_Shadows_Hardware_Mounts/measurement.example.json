@@ -1,0 +1,17 @@
+{
+  "plate_length": 160.0,
+  "plate_width": 100.0,
+  "plate_thickness": 6.0,
+  "mount_pitch_x": 100.0,
+  "mount_pitch_y": 60.0,
+  "fastener_diameter": 5.5,
+  "edge_margin": 10.0,
+  "bracket_height": 40.0,
+  "sensor_length": 40.0,
+  "sensor_width": 30.0,
+  "sensor_height": 25.0,
+  "clearance": 0.6,
+  "wall": 3.0,
+  "cable_diameter": 8.0,
+  "lens_diameter": 12.0
+}

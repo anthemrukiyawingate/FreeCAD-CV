@@ -1,0 +1,39 @@
+name: CortexCAD source validation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install source tooling
+        run: python -m pip install -e '.[dev,notebooks,mcp]'
+      - name: IPC, recipes, SDK and delivery contracts
+        run: python -m unittest discover -s tests -v
+      - name: Python source lint
+        run: ruff check cortexcad scripts tests
+      - name: Notebook and static page contracts
+        run: python scripts/validate_curriculum.py
+      - name: Browser math contracts
+        run: node --test tests/test_demo_math.cjs
+      - name: Execute notebooks in offline kernels
+        run: python scripts/execute_notebooks.py
+      - name: Package Python and source handoff
+        run: |
+          python -m build
+          python scripts/package_release.py
+# Publishing is controlled by DevOps using the selected branch's /docs folder.
+# This workflow neither deploys a site nor contacts a Windows CAD endpoint.

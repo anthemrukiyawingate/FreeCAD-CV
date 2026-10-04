@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#21252b">
+<meta name="description" content="CortexCAD: a hands-on parametric design laboratory. Explore sketch constraints, Boolean operations, parameter-driven solids, and hardware layouts.">
+<title>CortexCAD — The parametric laboratory</title>
+<style>
+[hidden]{display:none!important}
+:root{color-scheme:dark;--bg:#21252b;--panel:#252a31;--ink:#eef1ef;--muted:#a1a9b2;--line:#3a4149;--cyan:#8ee7dc;--lime:#c9ee91;--violet:#c1acf0;--mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;--sans:Inter,"Segoe UI",Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans)}button,input,a{-webkit-tap-highlight-color:transparent}button,input{font:inherit}button,a{touch-action:manipulation}a{color:inherit;text-decoration:none}button{color:inherit;cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:5px}button:disabled{cursor:not-allowed;opacity:.38}button{border:0;background:none}svg{display:block}.mono{font-family:var(--mono)}.muted{color:var(--muted)}.eyebrow{font:10px/1.5 var(--mono);letter-spacing:1.6px;text-transform:uppercase}.skip{position:absolute;top:-80px;left:12px;z-index:100;background:var(--cyan);color:#182724;padding:12px}.skip:focus{top:12px}
+.topbar{height:79px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 35px;gap:20px}.brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.8px;font-size:23px}.brand-mark{width:32px;height:34px;color:var(--cyan)}.brand span span{font-weight:350;color:var(--cyan)}.header-center{display:flex;gap:9px;align-items:center;color:var(--muted);font:10px var(--mono);letter-spacing:1.5px}.dot{width:5px;height:5px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px #c9ee9140}.header-right{display:flex;gap:23px;align-items:center}.version{font:10px var(--mono);color:var(--muted);border:1px solid var(--line);padding:5px 8px}.field-link{font-size:12px}.field-link span{color:var(--cyan);margin-left:10px}
+.shell{display:grid;grid-template-columns:228px minmax(0,1fr);max-width:2400px;margin:auto;min-height:calc(100vh - 79px)}.sidebar{border-right:1px solid var(--line);padding:34px 17px 22px;display:flex;flex-direction:column}.sidebar-title{padding:0 13px;color:var(--muted);margin-bottom:19px}.phase-nav{display:flex;flex-direction:column;gap:8px}.phase-button{display:flex;text-align:left;align-items:center;gap:13px;padding:15px 12px;border:1px solid transparent;border-radius:5px;position:relative;width:100%}.phase-button:hover{background:#ffffff04}.phase-button[aria-current="step"]{background:#8ee7dc0a;border-color:#8ee7dc28}.phase-button[aria-current="step"]:before{content:"";position:absolute;left:-18px;top:14px;bottom:14px;width:3px;background:var(--cyan)}.phase-num{color:#79838f;font:12px var(--mono)}.phase-button[aria-current="step"] .phase-num{color:var(--cyan)}.phase-name{font-weight:550;font-size:12px;display:block;line-height:1.5}.phase-detail{font-size:10px;color:var(--muted);display:block;margin-top:3px}.phase-check{margin-left:auto;color:var(--cyan);font-size:16px}.sidebar-rule{height:1px;background:var(--line);margin:25px 12px}.small-link{font-size:11px;display:flex;align-items:center;justify-content:space-between;padding:10px 13px;color:var(--muted)}.small-link:hover{color:var(--ink)}.sidebar-bottom{margin-top:auto;padding:60px 13px 0}.mini-orbit{height:72px;position:relative;width:100px;margin-bottom:15px}.mini-orbit:before,.mini-orbit:after{content:"";position:absolute;width:70px;height:37px;left:5px;top:13px;border:1px solid #8ee7dc65;border-radius:50%;transform:rotate(-30deg)}.mini-orbit:after{transform:rotate(30deg);border-color:#c1acf078}.mini-orbit i{position:absolute;left:40px;top:28px;width:8px;height:8px;background:var(--cyan);box-shadow:0 0 30px #8ee7dc70;border-radius:50%}.sidebar-bottom strong{font-size:12px;font-weight:500}.sidebar-bottom p{font-size:11px;color:var(--muted);line-height:1.7;margin-top:8px}.local-label{font:9px var(--mono);color:#a9b3bc;display:flex;align-items:center;gap:7px;margin-top:19px}
+.main{min-width:0;padding:33px 36px 0}.breadcrumb{display:flex;align-items:center;gap:11px;color:#8b959f;font:9px var(--mono);letter-spacing:1.3px}.breadcrumb span:last-child{color:var(--cyan)}.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:25px;margin-top:26px;margin-bottom:27px}.intro h1{font-size:clamp(26px,2.6vw,44px);line-height:1.13;letter-spacing:-1.4px;font-weight:450;margin:0 0 10px}.intro p{margin:0;color:var(--muted);font-size:12px}.phase-pill{flex-shrink:0;display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:30px;padding:9px 13px;font:9px var(--mono);letter-spacing:1px}.phase-pill i{height:5px;width:5px;border-radius:50%;background:var(--cyan)}
+.workbench{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#1e2329}.bench-top{height:47px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:0 17px;gap:15px;background:#252a31}.document-tab{display:flex;align-items:center;gap:9px;font:10px var(--mono)}.file-icon{color:var(--cyan);font-size:14px}.bench-mode{font:9px var(--mono);color:var(--muted);letter-spacing:1px}.bench-body{display:grid;grid-template-columns:minmax(0,1fr) 276px;min-height:458px}.viewport{position:relative;min-width:0;overflow:hidden;background:radial-gradient(ellipse at 49% 45%,#303941 0,#252c32 39%,#1e242a 85%);min-height:458px}.viewport canvas{display:block;position:absolute;width:100%;height:100%;inset:0}.view-label{position:absolute;left:22px;top:21px;z-index:1;color:#a9b4bf;font:9px var(--mono);letter-spacing:1px;pointer-events:none}.view-label strong{font-size:10px;color:#e5ebe9;display:block;margin-bottom:7px;font-weight:500;letter-spacing:.4px}.view-tools{position:absolute;right:15px;top:17px;display:flex;flex-direction:column;gap:7px}.icon-button{width:31px;height:31px;border:1px solid #525d6580;border-radius:4px;background:#262e35b0;display:grid;place-items:center;font:18px var(--mono);color:#a9b6be}.icon-button:hover{color:var(--cyan);border-color:var(--cyan)}.icon-button[aria-pressed="true"]{color:var(--cyan);background:#8ee7dc14}.axis-key{position:absolute;left:19px;bottom:17px;width:60px;height:60px;pointer-events:none}.view-hint{position:absolute;bottom:25px;left:95px;color:#97a3ad;font:9px var(--mono)}.view-badge{position:absolute;right:18px;bottom:24px;color:var(--cyan);font:9px var(--mono);border:1px solid #8ee7dc33;background:#1e282cbf;border-radius:3px;padding:6px 9px}.inspector{border-left:1px solid var(--line);background:#252a31;padding:22px 20px;overflow:hidden}.inspector-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:23px}.inspector-heading h2{font-size:12px;font-weight:550;margin:0}.inspector-heading span{font:9px var(--mono);color:var(--muted)}.control-group{margin-bottom:17px}.control-title{display:flex;align-items:center;justify-content:space-between;font-size:11px;margin-bottom:10px}.control-title output{font:11px var(--mono);color:var(--cyan);font-variant-numeric:tabular-nums}.control-title output small{font-size:9px;color:var(--muted);margin-left:4px}input[type="range"]{width:100%;height:16px;margin:0;accent-color:var(--cyan);cursor:pointer;appearance:none;background:transparent}input[type="range"]::-webkit-slider-runnable-track{height:3px;background:#48515b;border-radius:10px}input[type="range"]::-webkit-slider-thumb{appearance:none;height:10px;width:10px;background:var(--cyan);border-radius:3px;margin-top:-3.5px;box-shadow:0 0 0 3px #8ee7dc12}input[type="range"]::-moz-range-track{height:3px;background:#48515b}input[type="range"]::-moz-range-thumb{height:10px;width:10px;border:0;background:var(--cyan);border-radius:3px}input[type="range"]:disabled{opacity:.35;cursor:not-allowed}.range-labels{display:flex;justify-content:space-between;color:#89939e;font:8px var(--mono);margin-top:4px}.divider{height:1px;background:var(--line);margin:19px 0}.subheading{color:#98a3ae;font:9px var(--mono);letter-spacing:1.1px;margin-bottom:10px}.lock-row{display:flex;justify-content:space-between;align-items:center;width:100%;padding:8px 0;font-size:11px}.lock-row span:first-child{display:flex;align-items:center;gap:8px}.lock-icon{font:12px var(--mono);color:var(--muted)}.switch{display:flex;width:25px;height:14px;border:1px solid #69747d;border-radius:10px;align-items:center;padding:2px}.switch:after{content:"";width:8px;height:8px;border-radius:50%;background:#8f9aa5}.lock-row[aria-pressed="true"] .switch{border-color:#8ee7dc88;background:#8ee7dc16;justify-content:flex-end}.lock-row[aria-pressed="true"] .switch:after{background:var(--cyan)}.lock-row[aria-pressed="true"] .lock-icon{color:var(--cyan)}.metric-box{border:1px solid #c9ee912b;border-radius:4px;background:#c9ee9107;padding:12px 13px;margin-top:17px}.metric-box .metric-value{font:23px var(--mono);letter-spacing:-1px;color:var(--lime)}.metric-box .metric-value span{font:9px var(--mono);letter-spacing:0;margin-left:5px;color:#b3cba0}.metric-caption{font-size:10px;color:#acb99f;margin-top:4px}.reset{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;border:1px solid #4a535d;padding:8px 12px;border-radius:4px;font-size:10px;margin-top:17px;color:#c0c8ce}.reset:hover{background:#ffffff05;border-color:#71808c}.operation-group{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:0 0 19px}.operation{padding:9px 2px;border:1px solid #49535e;border-radius:3px;font:9px var(--mono)}.operation[aria-pressed="true"]{background:#8ee7dc15;border-color:#8ee7dc70;color:var(--cyan)}.example{font-size:10px;color:var(--violet);line-height:1.6;padding:9px 10px;border:1px solid #c1acf031;background:#c1acf006;border-radius:3px;margin-bottom:16px}.bench-bottom{height:34px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px;font:8px var(--mono);color:#9faab3;letter-spacing:.3px;background:#252a31}.perf{display:flex;gap:15px}.perf strong{font-weight:400;color:var(--lime)}.status{display:flex;gap:7px;align-items:center}.status .dot{width:4px;height:4px}
+.below{display:grid;grid-template-columns:minmax(0,1fr) 276px;gap:21px;margin:23px 0 24px}.lesson{border:1px solid var(--line);padding:19px 22px;border-radius:6px;background:#242a30}.lesson-top{display:flex;align-items:center;justify-content:space-between}.lesson-tag{font:9px var(--mono);letter-spacing:1.3px;color:var(--cyan)}.lesson-number{font:9px var(--mono);color:#8d98a3}.lesson h2{margin:13px 0 7px;font-size:16px;font-weight:500;letter-spacing:-.3px}.lesson p{margin:0;max-width:730px;font-size:11px;line-height:1.8;color:#a9b3bc}.lesson code{font-size:10px;color:#b7c9c9}.concept-card{padding:19px 18px;border:1px solid #c1acf038;border-radius:6px;background:linear-gradient(135deg,#c1acf008,transparent)}.concept-card .eyebrow{color:var(--violet);font-size:8px;letter-spacing:1px}.concept-formula{font:17px var(--mono);margin:14px 0 8px;color:#dfd5f2;letter-spacing:-.6px}.concept-card p{font-size:10px;line-height:1.7;margin:0;color:#aaa3b9}.workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;border-top:1px solid var(--line);padding:20px 0 23px}.workflow-step{display:flex;align-items:flex-start;gap:11px}.workflow-step .step-index{font:9px var(--mono);color:#77838e;padding-top:3px}.workflow-step strong{font-size:10px;font-weight:500;display:block;color:#b5bec7}.workflow-step p{font-size:9px;color:#85919d;line-height:1.6;margin:5px 0 0}.workflow-step.active .step-index,.workflow-step.active strong{color:var(--cyan)}.footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid var(--line);padding:16px 0 19px;color:#89959f;font-size:9px}.footer a:hover{color:var(--cyan)}.footer-right{font:8px var(--mono);letter-spacing:.5px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(min-width:1650px){.main{padding:44px 55px 0}.shell{grid-template-columns:250px minmax(0,1fr)}.intro{margin-top:38px;margin-bottom:35px}.bench-body{min-height:570px;grid-template-columns:minmax(0,1fr) 312px}.viewport{min-height:570px}.inspector{padding:27px}.below{grid-template-columns:minmax(0,1fr) 312px}.lesson p{font-size:12px}.workflow{padding-top:25px;padding-bottom:28px}}
+@media(min-width:2300px){.bench-body,.viewport{min-height:720px}.intro h1{font-size:49px}.main{padding-top:50px}.below{margin-top:30px;margin-bottom:30px}.lesson{padding:27px}.concept-card{padding:27px 22px}}
+@media(max-width:1150px){.shell{grid-template-columns:188px minmax(0,1fr)}.sidebar{padding-left:10px;padding-right:10px}.phase-button{gap:9px;padding-left:9px;padding-right:9px}.phase-button[aria-current="step"]:before{left:-11px}.phase-name{font-size:11px}.phase-detail{font-size:9px}.main{padding:27px 23px 0}.bench-body{grid-template-columns:minmax(0,1fr) 236px}.below{grid-template-columns:minmax(0,1fr) 236px}.inspector{padding:20px 16px}.phase-pill{display:none}.view-hint{display:none}.header-center{display:none}.intro h1{font-size:30px}.workflow{gap:12px}}
+@media(max-width:860px){.shell{display:block}.sidebar{padding:12px 20px;border-right:0;border-bottom:1px solid var(--line)}.sidebar-title,.sidebar-rule,.small-link,.sidebar-bottom{display:none}.phase-nav{flex-direction:row;gap:6px}.phase-button{width:25%;padding:10px 9px}.phase-button[aria-current="step"]:before{display:none}.phase-detail{display:none}.phase-check{display:none}.main{padding:25px 20px 0}.intro{margin-top:23px}.topbar{height:67px;padding:0 21px}.brand{font-size:21px}.header-right{gap:14px}.version{display:none}.bench-body{grid-template-columns:minmax(0,1fr) 245px}.viewport{min-height:475px}.below{grid-template-columns:minmax(0,1fr) 245px;gap:15px}.intro h1{font-size:30px}.workflow-step p{display:none}.footer{line-height:1.6}.footer-right{display:none}}
+@media(max-width:620px){.topbar{height:62px;padding:0 17px}.brand{font-size:20px}.brand-mark{width:27px}.field-link{font-size:10px}.sidebar{padding:9px 12px}.phase-button{flex-direction:column;gap:3px;text-align:center;padding:7px 3px}.phase-name{font-size:9px;font-weight:400}.phase-num{font-size:9px}.main{padding:24px 13px 0}.intro{margin:19px 2px 22px}.intro h1{font-size:29px;letter-spacing:-1px;max-width:300px}.intro p{font-size:11px;max-width:290px;line-height:1.6}.breadcrumb{font-size:8px;gap:8px;margin-left:2px}.bench-top{padding:0 12px;height:42px}.bench-mode{font-size:7px}.document-tab{font-size:9px}.bench-body{display:block}.viewport{height:365px;min-height:365px}.inspector{border-left:0;border-top:1px solid var(--line);padding:20px}.inspector-heading{margin-bottom:20px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}.control-group{min-width:0}.inspector .divider{margin:7px 0 13px}.lock-row{padding:9px 0}.metric-box{margin-top:13px}.metric-caption{font-size:10px}.bench-bottom{height:auto;min-height:39px;gap:10px;padding:10px 12px;font-size:7px}.perf{gap:8px}.below{display:block;margin-top:16px;margin-bottom:20px}.lesson{padding:19px}.concept-card{margin-top:13px;padding:17px 19px}.concept-formula{margin:10px 0 7px}.workflow{grid-template-columns:1fr 1fr;gap:15px;padding:19px 2px}.workflow-step p{display:block}.view-label{left:17px;top:18px;font-size:8px}.view-label strong{font-size:9px}.view-badge{font-size:8px;right:14px}.footer{font-size:8px;padding-left:3px;padding-right:3px;flex-direction:column;gap:5px}.operation-group{margin-top:2px}.example{margin-top:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body data-initial-phase="3">
+<noscript><p style="padding:16px;margin:0">Enable JavaScript to use the interactive geometry laboratory. The curriculum and concept notes remain available in this repository.</p></noscript>
+<a class="skip" href="#workbench">Skip to interactive workbench</a>
+<header class="topbar">
+ <a class="brand" href="../index.html" aria-label="CortexCAD home"><svg class="brand-mark" viewBox="0 0 36 40" fill="none" aria-hidden="true"><path d="M18 2 33 11v18L18 38 3 29V11Z" stroke="currentColor" stroke-width="1.4"/><path d="m3 11 15 9 15-9M18 20v18M10 15.2V25l8 4.7 8-4.7v-9.8M10 15.2l8-4.7 8 4.7" stroke="currentColor" stroke-width="1.3"/></svg><span>Cortex<span>CAD</span></span></a>
+ <div class="header-center"><span class="dot"></span>A PARAMETRIC LEARNING LABORATORY</div>
+ <div class="header-right"><span class="version">EDITION 01</span><a class="field-link" href="#lesson">The field guide <span aria-hidden="true">↗</span></a></div>
+</header>
+<div class="shell">
+<aside class="sidebar" aria-label="Curriculum navigation">
+ <div class="sidebar-title eyebrow">Your learning path</div>
+ <nav class="phase-nav" aria-label="Select curriculum phase">
+  <button class="phase-button" data-phase="1" aria-current="step"><span class="phase-num">01</span><span><span class="phase-name">Sketch & constrain</span><span class="phase-detail">Sketcher + PartDesign</span></span><span class="phase-check" aria-hidden="true">↗</span></button>
+  <button class="phase-button" data-phase="2"><span class="phase-num">02</span><span><span class="phase-name">Combine & subtract</span><span class="phase-detail">Constructive geometry</span></span><span class="phase-check" aria-hidden="true">↗</span></button>
+  <button class="phase-button" data-phase="3"><span class="phase-num">03</span><span><span class="phase-name">Drive with data</span><span class="phase-detail">Python + Spreadsheets</span></span><span class="phase-check" aria-hidden="true">↗</span></button>
+  <button class="phase-button" data-phase="4"><span class="phase-num">04</span><span><span class="phase-name">Make it physical</span><span class="phase-detail">Plato Shadows capstone</span></span><span class="phase-check" aria-hidden="true">↗</span></button>
+ </nav>
+ <div class="sidebar-rule"></div>
+ <a class="small-link" id="standalone-link" href="../phase-3/index.html">Open standalone lab <span aria-hidden="true">↗</span></a>
+ <a class="small-link" href="#lesson">Concept notes <span aria-hidden="true">↓</span></a>
+ <div class="sidebar-bottom"><div class="mini-orbit" aria-hidden="true"><i></i></div><strong>Think in relationships.</strong><p>A dimension changes.<br>A whole design responds.</p><div class="local-label"><span class="dot"></span>LOCAL BROWSER SIMULATION</div></div>
+</aside>
+<main class="main">
+ <div class="breadcrumb"><span>LEARN</span><span aria-hidden="true">/</span><span>PLAYGROUND</span><span aria-hidden="true">/</span><span id="breadcrumb-phase">01 — SKETCHER</span></div>
+ <div class="intro"><div><h1 id="phase-title">Every solid starts here.</h1><p id="phase-subtitle">Find the freedom in a sketch. Then give it a little structure.</p></div><div class="phase-pill"><i></i>INTERACTIVE ENGINE MOCK</div></div>
+ <section class="workbench" id="workbench" aria-label="Interactive CAD simulation" tabindex="-1">
+  <div class="bench-top"><div class="document-tab"><span class="file-icon" aria-hidden="true">◇</span><span id="document-name">01_constrained_sketch.fcstd</span><span class="muted" aria-hidden="true">·</span></div><span class="bench-mode">LEARN BY CHANGING</span></div>
+  <div class="bench-body">
+   <div class="viewport" id="viewport"><canvas id="scene" role="img" aria-label="Isometric rectangle sketch with dimension annotations; exact model values are available in the inspector"></canvas><div class="view-label"><strong id="view-title">RECTANGULAR PROFILE</strong><span id="view-subtitle">XY PLANE / ISOMETRIC VIEW</span></div><div class="view-tools"><button class="icon-button" id="zoom-in" aria-label="Zoom in">+</button><button class="icon-button" id="zoom-out" aria-label="Zoom out">−</button><button class="icon-button" id="fit-view" aria-label="Fit model to view">⌖</button><button class="icon-button" id="toggle-grid" aria-label="Toggle construction grid" aria-pressed="true">▦</button></div><svg class="axis-key" viewBox="0 0 65 65" aria-label="Isometric coordinate axes"><path d="M30 37 54 49M30 37 7 49M30 37V9" fill="none" stroke="#64717c"/><path d="M30 37 45 44" stroke="#c1acf0"/><path d="M30 37 15 44" stroke="#c9ee91"/><path d="M30 37V19" stroke="#8ee7dc"/><g font-size="8" font-family="monospace"><text x="54" y="56" fill="#c1acf0">X</text><text x="4" y="56" fill="#c9ee91">Y</text><text x="28" y="12" fill="#8ee7dc">Z</text></g><circle cx="30" cy="37" r="2" fill="#b0bec7"/></svg><span class="view-hint" id="view-hint">ADJUST THE PARAMETERS. WATCH THE RELATIONSHIPS.</span><span class="view-badge" id="view-badge">2 DEGREES OF FREEDOM</span></div>
+   <aside class="inspector" aria-label="Geometry controls"><div class="inspector-heading"><h2 id="inspector-title">Sketch parameters</h2><span>mm</span></div><div id="controls"></div><div class="metric-box" aria-live="polite" aria-atomic="true"><div class="metric-value" id="metric-value">2<span>DOF REMAINING</span></div><div class="metric-caption" id="metric-caption">Lock dimensions to fully constrain the sketch.</div></div><button class="reset" id="reset"><span aria-hidden="true">↺</span>Reset experiment</button></aside>
+  </div>
+  <div class="bench-bottom"><span class="status"><span class="dot"></span><span id="simulation-status">SIMULATION READY</span></span><div class="perf"><span><strong id="fps">—</strong> FPS</span><span id="resolution">DRS —</span><span>60 FPS TARGET</span></div></div>
+ </section>
+ <div class="below"><article class="lesson" id="lesson"><div class="lesson-top"><span class="lesson-tag">THE IDEA BEHIND THE GEOMETRY</span><span class="lesson-number" id="lesson-number">NOTE 01 / 04</span></div><h2 id="lesson-title">Constraints are design decisions.</h2><p id="lesson-body">An axis-aligned rectangle has four independent parameters: x, y, width, and height. Fixing the origin removes two degrees of freedom. Lock both dimensions and the profile becomes fully constrained — ready for a PartDesign Pad.</p></article><aside class="concept-card"><div class="eyebrow" id="formula-label">THE SKETCH EQUATION</div><div class="concept-formula" id="formula">DOF = 4 − 2 − 0 − 0</div><p id="formula-note">A lock fixes a parameter at its current value. The right angles are already built into this rectangle model.</p></aside></div>
+ <div class="workflow" aria-label="Curriculum progression"><div class="workflow-step active" data-step="1"><span class="step-index">01 /</span><div><strong>Define your intent</strong><p>Constrain a precise 2D profile.</p></div></div><div class="workflow-step" data-step="2"><span class="step-index">02 /</span><div><strong>Build through subtraction</strong><p>Let simple shapes do the work.</p></div></div><div class="workflow-step" data-step="3"><span class="step-index">03 /</span><div><strong>Make change effortless</strong><p>One parameter. Every relationship.</p></div></div><div class="workflow-step" data-step="4"><span class="step-index">04 /</span><div><strong>Connect to the physical</strong><p>A projector. A camera. A possibility.</p></div></div></div>
+ <footer class="footer"><span>Curriculum by etherwAre · MIT License · Capstone concept: <a href="https://www.tiktok.com/@teekenng" target="_blank" rel="noopener noreferrer">Tee Ken Ng ↗</a></span><span class="footer-right">BROWSER MATH · NO LIVE FREECAD CONNECTION</span></footer>
+</main>
+</div>
+<script>
+(() => {
+  'use strict';
+  // All geometry is millimetres. Pure functions are exported before touching the DOM.
+  const finite = (...values) => { if (!values.every(Number.isFinite)) throw new RangeError('Dimensions must be finite'); };
+  const positive = (...values) => { finite(...values); if (values.some(v => v <= 0)) throw new RangeError('Dimensions must be positive'); };
+  function rectangleDOF(locks) { return 4 - (locks.origin ? 2 : 0) - (locks.width ? 1 : 0) - (locks.height ? 1 : 0); }
+  function constrainRectangle(candidate, locks, reference) {
+    finite(candidate.x, candidate.y); positive(candidate.width, candidate.height);
+    const result = { x: locks.origin ? reference.x : candidate.x, y: locks.origin ? reference.y : candidate.y, width: locks.width ? reference.width : candidate.width, height: locks.height ? reference.height : candidate.height };
+    finite(result.x, result.y); positive(result.width, result.height); return result;
+  }
+  function circleRectangleIntersection(rectangle, circle) {
+    finite(rectangle.x, rectangle.y, circle.x, circle.y); positive(rectangle.width, rectangle.height, circle.radius);
+    const r = circle.radius;
+    const primitive = x => .5 * (x * Math.sqrt(Math.max(0, r * r - x * x)) + r * r * Math.asin(Math.max(-1, Math.min(1, x / r))));
+    // Signed integral over the box between the origin and (x,y), relative to circle centre.
+    function quadrant(x, y) {
+      const sign = Math.sign(x) * Math.sign(y), a = Math.min(Math.abs(x), r), b = Math.min(Math.abs(y), r);
+      if (a * a + b * b <= r * r) return sign * a * b;
+      const crossing = Math.sqrt(Math.max(0, r * r - b * b));
+      return sign * (b * crossing + primitive(a) - primitive(crossing));
+    }
+    const x0 = rectangle.x - circle.x, x1 = x0 + rectangle.width, y0 = rectangle.y - circle.y, y1 = y0 + rectangle.height;
+    const result = quadrant(x1, y1) - quadrant(x0, y1) - quadrant(x1, y0) + quadrant(x0, y0);
+    return Math.max(0, Math.min(result, rectangle.width * rectangle.height, Math.PI * r * r));
+  }
+  function booleanAreas(rectangle, circle) {
+    const intersection = circleRectangleIntersection(rectangle, circle), a = rectangle.width * rectangle.height, b = Math.PI * circle.radius * circle.radius;
+    return { union: a + b - intersection, difference: a - intersection, intersection, rectangle: a, circle: b };
+  }
+  function plateProperties({ width, depth, thickness, holeRadius }) {
+    positive(width, depth, thickness, holeRadius);
+    if (2 * holeRadius >= Math.min(width, depth)) throw new RangeError('Through-hole must fit inside the plate');
+    const footprint = width * depth - Math.PI * holeRadius * holeRadius;
+    return { footprint, volume: footprint * thickness };
+  }
+  function layoutProperties({ projectorWidth, cameraWidth, gap, margin }) {
+    positive(projectorWidth, cameraWidth, gap, margin);
+    return { plateWidth: projectorWidth + cameraWidth + gap + 2 * margin, projectorCenter: margin + projectorWidth / 2, cameraCenter: margin + projectorWidth + gap + cameraWidth / 2 };
+  }
+  function lerpTime(current, target, dt, speed = 10, reducedMotion = false) { return reducedMotion ? target : current + (target - current) * (1 - Math.exp(-speed * Math.max(0, dt))); }
+  function resolutionScale(scale, frameMs, dpr) { const ceiling = Math.max(.5, Math.min(2, dpr)); return Math.max(.5, Math.min(ceiling, scale + (frameMs > 20 ? -.1 : frameMs < 17.5 ? .05 : 0))); }
+  function frameStatistics(samples) {
+    if (!samples.length) throw new RangeError('Provide at least one measured frame interval');
+    positive(...samples);
+    const frameMs = samples.reduce((sum, value) => sum + value, 0) / samples.length;
+    const sorted = [...samples].sort((a, b) => a - b);
+    return { frameMs, fps: 1000 / frameMs, p95FrameMs: sorted[Math.ceil(sorted.length * .95) - 1] };
+  }
+  globalThis.CortexMath = Object.freeze({ rectangleDOF, constrainRectangle, circleRectangleIntersection, booleanAreas, plateProperties, layoutProperties, lerpTime, resolutionScale, frameStatistics });
+  if (typeof document === 'undefined') return;
+
+  const $ = id => document.getElementById(id), canvas = $('scene'), ctx = canvas.getContext('2d'), viewport = $('viewport');
+  const layer = document.createElement('canvas'), layerCtx = layer.getContext('2d');
+  const colors = { cyan: '#8ee7dc', lime: '#c9ee91', violet: '#c1acf0', muted: '#a6b5be' };
+  const reducedQuery = matchMedia('(prefers-reduced-motion: reduce)');
+  let reducedMotion = reducedQuery.matches;
+  reducedQuery.addEventListener('change', event => { reducedMotion = event.matches; });
+  const initialPhase = Number(document.body.dataset.initialPhase) || 1;
+  const rootPrefix = initialPhase === 1 && !/phase-1\/?(?:index\.html)?$/.test(location.pathname) ? './' : '../';
+  document.querySelector('.brand').href = rootPrefix + 'index.html';
+  const phaseData = {
+    1: { title: 'Every solid starts here.', subtitle: 'Find the freedom in a sketch. Then give it a little structure.', breadcrumb: '01 — SKETCHER', file: '01_constrained_sketch.fcstd', view: 'RECTANGULAR PROFILE', viewSub: 'XY PLANE / ISOMETRIC VIEW', inspector: 'Sketch parameters', lesson: 'Constraints are design decisions.', body: 'An axis-aligned rectangle has four independent parameters: x, y, width, and height. Fixing the origin removes two degrees of freedom. Lock both dimensions and the profile becomes fully constrained — ready for a PartDesign Pad.', formulaLabel: 'THE SKETCH EQUATION', formulaNote: 'A lock fixes a parameter at its current value. The right angles are already built into this rectangle model.', aria: 'Isometric rectangle sketch with dimension annotations. Change width, height, or unlocked origin coordinates using the inspector.' },
+    2: { title: 'Simple shapes. New possibilities.', subtitle: 'Add, subtract, intersect. Discover the geometry between.', breadcrumb: '02 — CONSTRUCTIVE GEOMETRY', file: '02_boolean_study.fcstd', view: 'BOOLEAN SHAPE STUDY', viewSub: 'XY PLANE / TOP VIEW', inspector: 'Boolean parameters', lesson: 'The overlap is where things get interesting.', body: 'Union keeps everything in either shape. Difference removes the circle from the rectangle. Intersection keeps only their overlap. This 2D study uses canvas compositing; its area comes from exact circle–rectangle integration. The notebook extends the same set operations to 3D solids.', formulaLabel: 'THE SET OPERATION', formulaNote: 'A is the rectangle. B is the circle. The dashed outlines preserve each source shape, while the fill shows the result.', aria: 'Top view of overlapping rectangle and circle. Filled region displays the selected Boolean operation; exact result area is in the inspector.' },
+    3: { title: 'Change one thing. Move everything.', subtitle: 'A live relationship between your data and your design.', breadcrumb: '03 — PARAMETRIC DESIGN', file: '03_spreadsheet_driven_plate.fcstd', view: 'PARAMETRIC MOUNTING PLATE', viewSub: 'NOTEBOOK EXTENSION / ISOMETRIC VIEW', inspector: 'Model parameters', lesson: 'Let the model remember the relationships.', body: 'The notebook drives a plain Part::Box through Dimensions.MountLength, MountWidth, and MountHeight. Validated JSON updates the cells, expressions drive the box, and document.recompute() rebuilds it. This browser extension adds a cylindrical through-hole; its radius is demo-only. Dimensions ease toward your input while the exact target volume updates immediately.', formulaLabel: 'THE VOLUME EQUATION', formulaNote: 'The browser extends the notebook’s plain box with one cylindrical through-hole. Volume uses exact target dimensions; easing is only a display effect.', aria: 'Isometric mounting plate with one circular through-hole, a browser extension of the notebook’s plain box. Adjust width, depth, thickness and hole radius; exact target volume is in the inspector.' },
+    4: { title: 'Give your ideas a place in the world.', subtitle: 'From relationships on a screen to a cyber-physical installation.', breadcrumb: '04 — PLATO SHADOWS', file: '04_plato_shadows_layout.fcstd', view: 'PROJECTOR + CAMERA LAYOUT', viewSub: 'EXAMPLE HARDWARE / ISOMETRIC VIEW', inspector: 'Layout parameters', lesson: 'Measure the hardware. Then let the design adapt.', body: 'A projector and webcam share a parametrically sized mounting plate. This layout mock keeps a defined gap and edge margin as the example device widths change. Real mounts also require measured hole patterns, cable paths, optical clearance, tolerances, loads, and a physical fit test. Plato Shadows is an original concept by Tee Ken Ng.', formulaLabel: 'THE LAYOUT RELATIONSHIP', formulaNote: 'W = projector + camera + gap + 2 × margin. Example dimensions only; this browser study does not certify a mount or hardware fit.', aria: 'Example isometric projector and camera arrangement on a mounting plate. Sliders adjust device widths, gap and margins; the required plate width is in the inspector.' }
+  };
+  const defaults = () => ({ x: 0, y: 0, width: 80, height: 50, circleX: 24, radius: 28, depth: 65, thickness: 9, holeRadius: 9, projectorWidth: 120, cameraWidth: 40, gap: 25, margin: 12 });
+  let state = defaults(), animated = defaults(), locks = { origin: true, width: false, height: false }, reference = { x: 0, y: 0, width: 80, height: 50 };
+  let phase = initialPhase, operation = 'difference', zoom = 1, showGrid = true, width = 1, height = 1, scale = Math.min(devicePixelRatio || 1, 2), resizePending = true;
+  let lastTime = 0, lastMetricsTime = 0, frames = 0, frameDuration = 0, timingSamples = [], pulse = 0;
+  const pretty = n => n.toLocaleString('en-US', { maximumFractionDigits: 1 });
+  function range(id, label, min, max, value, unit = 'mm') {
+    return `<div class="control-group"><label class="control-title" for="param-${id}">${label}<output id="value-${id}" for="param-${id}">${pretty(value)}<small>${unit}</small></output></label><input id="param-${id}" type="range" min="${min}" max="${max}" step="1" value="${value}" data-parameter="${id}"><div class="range-labels" aria-hidden="true"><span>${min}</span><span>${max}</span></div></div>`;
+  }
+  function renderControls() {
+    const lockButton = (id, label, symbol) => `<button class="lock-row" data-lock="${id}" aria-pressed="${locks[id]}"><span><span class="lock-icon" aria-hidden="true">${symbol}</span>${label}</span><span class="switch" aria-hidden="true"></span></button>`;
+    if (phase === 1) $('controls').innerHTML = `<div class="controls">${range('width', 'Width', 35, 140, state.width)}${range('height', 'Height', 25, 100, state.height)}</div><div class="divider"></div><div class="subheading">GEOMETRIC CONSTRAINTS</div>${lockButton('origin', 'Fix origin · x, y', '⌖')}${lockButton('width', 'Lock width', '↔')}${lockButton('height', 'Lock height', '↕')}<div class="controls" id="origin-controls" ${locks.origin ? 'hidden' : ''}>${range('x', 'Origin x', -30, 30, state.x)}${range('y', 'Origin y', -30, 30, state.y)}</div>`;
+    if (phase === 2) $('controls').innerHTML = `<div class="subheading">RESULTING SHAPE</div><div class="operation-group" role="group" aria-label="Boolean operation"><button class="operation" data-operation="union" aria-label="Union A and B" aria-pressed="${operation === 'union'}">A ∪ B</button><button class="operation" data-operation="difference" aria-label="Difference A minus B" aria-pressed="${operation === 'difference'}">A − B</button><button class="operation" data-operation="intersection" aria-label="Intersection A and B" aria-pressed="${operation === 'intersection'}">A ∩ B</button></div><div class="controls">${range('circleX', 'Circle offset', -80, 100, state.circleX)}${range('radius', 'Circle radius', 10, 48, state.radius)}</div><div class="divider"></div><div class="subheading">SOURCE GEOMETRY</div><p class="muted" style="font-size:11px;line-height:1.8;margin:0"><span style="color:var(--cyan)">A</span> &nbsp; Rectangle · 80 × 60 mm<br><span style="color:var(--violet)">B</span> &nbsp; Circle · variable radius</p>`;
+    if (phase === 3) $('controls').innerHTML = `<div class="controls">${range('width', 'Plate width', 60, 160, state.width)}${range('depth', 'Plate depth', 40, 100, state.depth)}${range('thickness', 'Thickness', 4, 24, state.thickness)}${range('holeRadius', 'Hole radius · demo', 4, 18, state.holeRadius)}</div><div class="divider"></div><div class="subheading">NOTEBOOK EXPRESSION MAP</div><p class="muted" style="font:9px/1.65 var(--mono);margin:0">Dimensions.MountLength<br>→ Part::Box.Length (plate width)<br>Dimensions.MountWidth<br>→ Part::Box.Width (plate depth)<br>Dimensions.MountHeight<br>→ Part::Box.Height (thickness)</p>`;
+    if (phase === 4) $('controls').innerHTML = `<div class="example">EXAMPLE DIMENSIONS<br>Replace with measured hardware data.</div><div class="controls">${range('projectorWidth', 'Projector width', 80, 180, state.projectorWidth)}${range('cameraWidth', 'Camera width', 25, 70, state.cameraWidth)}${range('gap', 'Device clearance', 10, 60, state.gap)}${range('margin', 'Edge margin', 8, 25, state.margin)}</div>`;
+    syncLocks();
+  }
+  function syncLocks() {
+    if (phase !== 1) return;
+    for (const name of ['width', 'height']) $(`param-${name}`).disabled = locks[name];
+    for (const name of ['x', 'y']) $(`param-${name}`).disabled = locks.origin;
+    $('origin-controls').hidden = locks.origin;
+    document.querySelectorAll('[data-lock]').forEach(button => button.setAttribute('aria-pressed', String(locks[button.dataset.lock])));
+  }
+  function updateReadouts() {
+    document.querySelectorAll('[data-parameter]').forEach(input => { const v = state[input.dataset.parameter]; input.value = v; $(`value-${input.dataset.parameter}`).innerHTML = `${pretty(v)}<small>mm</small>`; input.setAttribute('aria-valuetext', `${v} millimetres`); });
+    let metric, unit, caption, badge, formula;
+    if (phase === 1) { const dof = rectangleDOF(locks); metric = dof; unit = 'DOF REMAINING'; caption = dof === 0 ? 'Fully constrained. Your profile is ready for a Pad.' : 'Lock dimensions to fully constrain the sketch.'; badge = dof === 0 ? 'FULLY CONSTRAINED' : `${dof} DEGREES OF FREEDOM`; formula = `DOF = 4 − ${locks.origin ? 2 : 0} − ${locks.width ? 1 : 0} − ${locks.height ? 1 : 0}`; }
+    if (phase === 2) { const areas = booleanAreas({ x: -40, y: -30, width: 80, height: 60 }, { x: state.circleX, y: 0, radius: state.radius }); metric = pretty(areas[operation]); unit = 'mm²'; caption = ({ union: 'Union · all points in A or B.', difference: 'Difference · points in A outside B.', intersection: 'Intersection · points in both A and B.' })[operation]; badge = `AREA ${pretty(areas[operation])} mm²`; formula = ({ union: '|A ∪ B| = |A| + |B| − |A ∩ B|', difference: '|A − B| = |A| − |A ∩ B|', intersection: 'A ∩ B = common region' })[operation]; }
+    if (phase === 3) { const props = plateProperties(state); metric = pretty(props.volume / 1000); unit = 'cm³ TARGET VOLUME'; caption = `Exact volume: ${pretty(props.volume)} mm³`; badge = `W ${state.width} · D ${state.depth} · T ${state.thickness} mm`; formula = 'V = (W × D − πr²) × T'; }
+    if (phase === 4) { const layout = layoutProperties(state); metric = layout.plateWidth; unit = 'mm PLATE WIDTH'; caption = `Device gap ${state.gap} mm · edge margin ${state.margin} mm`; badge = 'EXAMPLE FIXTURE · NOT MEASURED'; formula = `W = ${state.projectorWidth} + ${state.cameraWidth} + ${state.gap} + 2(${state.margin})`; }
+    $('metric-value').innerHTML = `${metric}<span>${unit}</span>`; $('metric-caption').textContent = caption; $('view-badge').textContent = badge; $('formula').textContent = formula;
+  }
+  function changePhase(next, updateHash = true) {
+    phase = next; state = defaults(); animated = defaults(); locks = { origin: true, width: false, height: false }; reference = { x: 0, y: 0, width: 80, height: 50 }; operation = 'difference'; zoom = 1;
+    const d = phaseData[phase];
+    for (const [id, key] of Object.entries({ 'phase-title': 'title', 'phase-subtitle': 'subtitle', 'breadcrumb-phase': 'breadcrumb', 'document-name': 'file', 'view-title': 'view', 'view-subtitle': 'viewSub', 'inspector-title': 'inspector', 'lesson-title': 'lesson', 'lesson-body': 'body', 'formula-label': 'formulaLabel', 'formula-note': 'formulaNote' })) $(id).textContent = d[key];
+    canvas.setAttribute('aria-label', d.aria); $('lesson-number').textContent = `NOTE 0${phase} / 04`; document.title = `CortexCAD — ${d.breadcrumb.slice(5)}`;
+    document.querySelectorAll('[data-phase]').forEach(button => { if (Number(button.dataset.phase) === phase) button.setAttribute('aria-current', 'step'); else button.removeAttribute('aria-current'); });
+    document.querySelectorAll('[data-step]').forEach(el => el.classList.toggle('active', Number(el.dataset.step) === phase));
+    $('standalone-link').href = rootPrefix + (phase === 4 ? 'capstone' : `phase-${phase}`) + '/index.html';
+    $('simulation-status').textContent = 'SIMULATION READY';
+    renderControls(); updateReadouts();
+    if (updateHash) history.replaceState(null, '', `#phase-${phase}`);
+  }
+  document.querySelectorAll('[data-phase]').forEach(button => button.addEventListener('click', () => changePhase(Number(button.dataset.phase))));
+  $('controls').addEventListener('input', event => {
+    const input = event.target.closest('[data-parameter]'); if (!input) return;
+    const parameter = input.dataset.parameter, next = Number(input.value); if (!Number.isFinite(next)) return;
+    state[parameter] = next;
+    if (phase === 1) Object.assign(state, constrainRectangle(state, locks, reference));
+    pulse = 1; $('simulation-status').textContent = phase === 3 ? 'RECOMPUTE SIMULATED' : 'GEOMETRY UPDATED'; updateReadouts();
+  });
+  $('controls').addEventListener('click', event => {
+    const lock = event.target.closest('[data-lock]'), choice = event.target.closest('[data-operation]');
+    if (lock) { const name = lock.dataset.lock; locks[name] = !locks[name]; if (locks[name]) { if (name === 'origin') { reference.x = state.x; reference.y = state.y; } else reference[name] = state[name]; } syncLocks(); updateReadouts(); }
+    if (choice) { operation = choice.dataset.operation; document.querySelectorAll('[data-operation]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.operation === operation))); pulse = 1; updateReadouts(); }
+  });
+  $('reset').addEventListener('click', () => { changePhase(phase, false); showGrid = true; $('toggle-grid').setAttribute('aria-pressed', 'true'); $('simulation-status').textContent = 'EXPERIMENT RESET'; });
+  $('zoom-in').addEventListener('click', () => { zoom = Math.min(1.8, zoom + .15); });
+  $('zoom-out').addEventListener('click', () => { zoom = Math.max(.55, zoom - .15); });
+  $('fit-view').addEventListener('click', () => { zoom = 1; });
+  $('toggle-grid').addEventListener('click', event => { showGrid = !showGrid; event.currentTarget.setAttribute('aria-pressed', String(showGrid)); });
+  addEventListener('hashchange', () => { const selected = /^#phase-([1-4])$/.exec(location.hash); if (selected) changePhase(Number(selected[1]), false); });
+  new ResizeObserver(() => { resizePending = true; }).observe(viewport);
+  document.addEventListener('visibilitychange', () => { lastTime = 0; frames = 0; frameDuration = 0; timingSamples = []; lastMetricsTime = 0; $('fps').textContent = '—'; });
+
+  function resize() {
+    width = viewport.clientWidth; height = viewport.clientHeight;
+    canvas.width = Math.max(1, Math.round(width * scale)); canvas.height = Math.max(1, Math.round(height * scale));
+    layer.width = canvas.width; layer.height = canvas.height;
+    resizePending = false;
+  }
+  function line(a, b, color = '#596b78', thickness = 1, dash = []) {
+    ctx.beginPath(); ctx.moveTo(...a); ctx.lineTo(...b); ctx.strokeStyle = color; ctx.lineWidth = thickness; ctx.setLineDash(dash); ctx.stroke(); ctx.setLineDash([]);
+  }
+  function polygon(points, fill, stroke = null, lineWidth = 1) {
+    ctx.beginPath(); points.forEach((point, i) => i ? ctx.lineTo(...point) : ctx.moveTo(...point)); ctx.closePath(); if (fill) { ctx.fillStyle = fill; ctx.fill(); } if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lineWidth; ctx.stroke(); }
+  }
+  function text(value, x, y, color = colors.muted, size = 10, align = 'center') { ctx.font = `${size}px "SFMono-Regular",Consolas,monospace`; ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillStyle = color; ctx.fillText(value, x, y); }
+  function label(value, x, y, color = colors.cyan, size = 10) { ctx.font = `${size}px "SFMono-Regular",Consolas,monospace`; const w = ctx.measureText(value).width; ctx.fillStyle = '#20292fe8'; ctx.fillRect(x - w / 2 - 7, y - 10, w + 14, 20); text(value, x, y, color, size); }
+  function node(point, locked) { ctx.beginPath(); ctx.arc(...point, 4, 0, Math.PI * 2); ctx.fillStyle = locked ? colors.lime : '#233338'; ctx.fill(); ctx.strokeStyle = locked ? colors.lime : colors.cyan; ctx.lineWidth = 1.5; ctx.stroke(); }
+  function dimension(a, b, labelText, color = '#9bb0bc') {
+    line(a, b, color + 'a0', .8); const dx = b[0] - a[0], dy = b[1] - a[1], len = Math.hypot(dx, dy) || 1, nx = -dy / len * 4, ny = dx / len * 4;
+    line([a[0] - nx, a[1] - ny], [a[0] + nx, a[1] + ny], color, .8); line([b[0] - nx, b[1] - ny], [b[0] + nx, b[1] + ny], color, .8); label(labelText, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2, color, 9);
+  }
+  function projector(unit, xCenter = width * .49, yCenter = height * .51) { return (x, y, z = 0) => [xCenter + (x - y) * .8660254 * unit, yCenter + (x + y) * .42 * unit - z * unit]; }
+  function grid(project, span = 180, step = 10) {
+    if (!showGrid) return;
+    for (let p = -span; p <= span; p += step) { const alpha = p % (step * 5) === 0 ? '38' : '16'; line(project(-span, p), project(span, p), '#91a6b4' + alpha, .7); line(project(p, -span), project(p, span), '#91a6b4' + alpha, .7); }
+    line(project(-span, 0), project(span, 0), '#c1acf043', .8); line(project(0, -span), project(0, span), '#c9ee9143', .8);
+  }
+  function cuboid(project, x, y, z, w, d, h, palette = ['#72b7b9', '#32545c', '#42676c'], outline = '#95e9de') {
+    const a = project(x, y, z), b = project(x + w, y, z), c = project(x + w, y + d, z), e = project(x, y + d, z), at = project(x, y, z + h), bt = project(x + w, y, z + h), ct = project(x + w, y + d, z + h), et = project(x, y + d, z + h);
+    polygon([a, b, c, e], '#09151c35');
+    polygon([bt, b, c, ct], palette[1], outline + '75', 1);
+    polygon([ct, c, e, et], palette[2], outline + '75', 1);
+    const topGradient = ctx.createLinearGradient(at[0], at[1], ct[0], ct[1]); topGradient.addColorStop(0, palette[0]); topGradient.addColorStop(1, palette[2]); polygon([at, bt, ct, et], topGradient, outline, 1.2);
+    line(at, bt, '#d9fffb70', 1); line(at, et, '#d9fffb70', 1);
+  }
+  function sketch() {
+    const u = Math.min(width / 235, height / 175) * zoom, p = projector(u, width * .49, height * .51), w = animated.width, h = animated.height, x = animated.x - 40, y = animated.y - 25;
+    grid((gx, gy, gz = 0) => p(gx - 40, gy - 25, gz), 180, 10);
+    const pts = [p(x,y),p(x+w,y),p(x+w,y+h),p(x,y+h)], fullyLocked = rectangleDOF(locks) === 0, edge = fullyLocked ? colors.lime : colors.cyan;
+    ctx.save(); ctx.shadowColor = edge; ctx.shadowBlur = 16; polygon(pts, '#8ee7dc0d', edge, 1.6); ctx.restore();
+    polygon(pts, '#8ee7dc0a');
+    line(p(x, y), p(x + w, y + h), '#8ee7dc22', .8, [4, 5]); line(p(x + w, y), p(x, y + h), '#8ee7dc22', .8, [4, 5]);
+    const cornerSize = 4; polygon([p(x + cornerSize, y), p(x + cornerSize, y + cornerSize), p(x, y + cornerSize)], null, '#8ee7dc72', .8);
+    pts.forEach((point, i) => node(point, fullyLocked || (i === 0 && locks.origin)));
+    line(p(x, y), p(x, y - 17), '#8ee7dc42', .7, [3, 3]); line(p(x + w, y), p(x + w, y - 17), '#8ee7dc42', .7, [3, 3]); dimension(p(x, y - 13), p(x + w, y - 13), `${pretty(state.width)} mm${locks.width ? ' · FIXED' : ''}`, locks.width ? colors.lime : colors.cyan);
+    line(p(x + w, y), p(x + w + 18, y), '#8ee7dc42', .7, [3, 3]); line(p(x + w, y + h), p(x + w + 18, y + h), '#8ee7dc42', .7, [3, 3]); dimension(p(x + w + 14, y), p(x + w + 14, y + h), `${pretty(state.height)} mm${locks.height ? ' · FIXED' : ''}`, locks.height ? colors.lime : colors.cyan);
+    const origin = p(x,y); line(origin, [origin[0] - 31, origin[1] - 28], '#8ee7dc55', .8); label(locks.origin ? 'ORIGIN FIXED' : `ORIGIN ${state.x}, ${state.y}`, origin[0] - 36, origin[1] - 41, locks.origin ? colors.lime : colors.cyan, 8);
+    const center = p(x+w/2,y+h/2); text(`${pretty(state.width * state.height)} mm²`, center[0], center[1] - 5, '#d4f5ed', 12); text('CLOSED PROFILE', center[0], center[1] + 14, '#87b7b3', 7);
+    // Small floating construction labels deliberately refer to the rectangle, not a hidden solver.
+    const a = p(x, y + h); text('90°', a[0] + 14, a[1] - 9, '#9badb7', 8, 'left');
+  }
+  function booleanStudy() {
+    const u = Math.min(width / 242, height / 184) * zoom, ox = width * .43, oy = height * .51, to = (x,y) => [ox + x*u, oy + y*u];
+    if (showGrid) { for(let x = -220; x < 230; x += 10) line(to(x,-130),to(x,130), x % 50 === 0 ? '#9bb2be26' : '#9bb2be12', .6); for(let y = -130; y < 140; y += 10) line(to(-230,y),to(230,y), y % 50 === 0 ? '#9bb2be26' : '#9bb2be12', .6); }
+    const rx = ox - 40*u, ry = oy - 30*u, rw = 80*u, rh = 60*u, cx = ox + animated.circleX*u, r = animated.radius*u;
+    layerCtx.setTransform(scale,0,0,scale,0,0); layerCtx.clearRect(0,0,width,height); layerCtx.globalCompositeOperation = 'source-over'; layerCtx.fillStyle = '#8ee7dc'; layerCtx.fillRect(rx,ry,rw,rh);
+    layerCtx.globalCompositeOperation = ({ union: 'source-over', difference: 'destination-out', intersection: 'destination-in' })[operation]; layerCtx.beginPath(); layerCtx.arc(cx,oy,r,0,Math.PI*2); layerCtx.fill(); layerCtx.globalCompositeOperation = 'source-over';
+    const gradient = layerCtx.createLinearGradient(0,oy-r,0,oy+r); gradient.addColorStop(0,'#aaf2df'); gradient.addColorStop(1,'#447f87'); layerCtx.globalCompositeOperation='source-in'; layerCtx.fillStyle=gradient; layerCtx.fillRect(0,0,width,height); layerCtx.globalCompositeOperation='source-over';
+    ctx.save(); ctx.globalAlpha=.66; ctx.shadowColor='#8ee7dc'; ctx.shadowBlur=20; ctx.drawImage(layer,0,0,layer.width,layer.height,0,0,width,height); ctx.restore();
+    ctx.setLineDash([5,4]); ctx.strokeStyle='#a6f2df'; ctx.lineWidth=1.2; ctx.strokeRect(rx,ry,rw,rh); ctx.beginPath(); ctx.arc(cx,oy,r,0,Math.PI*2); ctx.strokeStyle=colors.violet; ctx.stroke(); ctx.setLineDash([]);
+    label('A',rx+14,ry+15,colors.cyan,11); label('B',cx+r*.4,oy-r-15,colors.violet,11);
+    dimension(to(-40,48),to(40,48),'80 mm',colors.cyan);
+    line([cx,oy],[cx+r*.707,oy-r*.707],colors.violet+'9a',.8); node([cx,oy],false); label(`r ${state.radius}`,cx+r*.34,oy-r*.38,colors.violet,8);
+    label(({ union:'UNION / A ∪ B',difference:'DIFFERENCE / A − B',intersection:'INTERSECTION / A ∩ B' })[operation],width*.5,height*.80,colors.cyan,9);
+  }
+  function plate() {
+    const u = Math.min(width / 275, height / 210) * zoom, p = projector(u,width*.49,height*.55), w=animated.width,d=animated.depth,t=animated.thickness,r=animated.holeRadius;
+    grid(p,180,10);
+    // Ground shadow follows the actual footprint.
+    ctx.save();ctx.filter='blur(17px)';polygon([p(-w/2+4,-d/2+5),p(w/2+4,-d/2+5),p(w/2+4,d/2+5),p(-w/2+4,d/2+5)],'#06121990');ctx.restore();
+    cuboid(p,-w/2,-d/2,0,w,d,t);
+    const hole=p(0,0,t),bottom=p(0,0,0),rx=r*u*1.22474487,ry=r*u*.59396969;
+    ctx.save();ctx.beginPath();ctx.ellipse(...hole,rx,ry,0,0,Math.PI*2);ctx.clip();const g=ctx.createLinearGradient(hole[0],hole[1]-ry,hole[0],bottom[1]+ry);g.addColorStop(0,'#11232d');g.addColorStop(1,'#405c66');ctx.fillStyle=g;ctx.fillRect(hole[0]-rx-1,hole[1]-ry-1,2*rx+2,2*ry+2);ctx.beginPath();ctx.ellipse(...bottom,rx,ry,0,0,Math.PI*2);ctx.fillStyle='#18262e';ctx.fill();ctx.strokeStyle='#8ee7dc50';ctx.lineWidth=1;ctx.stroke();ctx.restore();ctx.beginPath();ctx.ellipse(...hole,rx,ry,0,0,Math.PI*2);ctx.strokeStyle='#b2f6e9';ctx.lineWidth=1.2;ctx.stroke();
+    dimension(p(-w/2,-d/2-14,t),p(w/2,-d/2-14,t),`W ${state.width} mm`,colors.cyan);dimension(p(w/2+16,-d/2,t),p(w/2+16,d/2,t),`D ${state.depth} mm`,colors.cyan);
+    const end=p(-w/2,d/2,t);line(end,[end[0]-30,end[1]+15],colors.cyan+'80',.8);label(`T ${state.thickness} mm`,end[0]-32,end[1]+28,colors.cyan,8);
+    line([hole[0]+rx*.7,hole[1]],[hole[0]+rx+34,hole[1]-22],colors.violet+'90',.8);label(`Ø ${state.holeRadius*2} mm`,hole[0]+rx+49,hole[1]-27,colors.violet,9);
+    const marker=p(-w/2,d/2+23,0);label('ONE THROUGH-HOLE · PARAMETRIC SOLID',width*.5,Math.min(height-75,marker[1]+30),'#9ab6bb',8);
+  }
+  function hardware() {
+    const layout=layoutProperties(animated),w=layout.plateWidth,d=100,u=Math.min(width/410,height/270)*zoom,p=projector(u,width*.48,height*.61),x=-w/2;
+    grid(p,260,20);cuboid(p,x,-d/2,0,w,d,6,['#4d6872','#263f4b','#314e5b'],'#8dbdcc');
+    const px=x+animated.margin,pw=animated.projectorWidth,cx=x+layout.cameraCenter-animated.cameraWidth/2,cw=animated.cameraWidth;
+    cuboid(p,px,-38,6,pw,76,30,['#72818e','#353f4c','#4d5867'],'#a4b2c2');
+    // Projector body ribs and a lens on the forward vertical face.
+    for(let k=0;k<7;k++) line(p(px+pw*.15+k*4,39,15),p(px+pw*.15+k*4,39,26),'#1a2730',1.4);
+    const lens=p(px+pw*.77,38,21);ctx.beginPath();ctx.ellipse(lens[0],lens[1],10*u,12*u,-.45,0,Math.PI*2);ctx.fillStyle='#13272e';ctx.fill();ctx.strokeStyle='#8ee7dc';ctx.lineWidth=1.5;ctx.stroke();ctx.beginPath();ctx.ellipse(lens[0],lens[1],5*u,7*u,-.45,0,Math.PI*2);ctx.fillStyle='#8ee7dc40';ctx.fill();
+    cuboid(p,cx,-17,6,cw,34,14,['#afa2cf','#514764','#726286'],'#c1acf0');
+    const camera=p(cx+cw*.5,17,14);ctx.beginPath();ctx.ellipse(camera[0],camera[1],6*u,7*u,-.45,0,Math.PI*2);ctx.fillStyle='#202433';ctx.fill();ctx.strokeStyle=colors.violet;ctx.stroke();
+    const projectorLabel=p(px+pw/2,-38,36);line(projectorLabel,[projectorLabel[0],projectorLabel[1]-22],'#acbdc886',.8);label('PROJECTOR',projectorLabel[0],projectorLabel[1]-33,'#c7d3df',8);
+    const cameraLabel=p(cx+cw/2,-17,20);line(cameraLabel,[cameraLabel[0]+16,cameraLabel[1]-35],colors.violet+'80',.8);label('CAMERA',cameraLabel[0]+18,cameraLabel[1]-45,colors.violet,8);
+    dimension(p(x,65,0),p(x+w,65,0),`${pretty(layoutProperties(state).plateWidth)} mm PLATE`,colors.cyan);
+    dimension(p(px+pw,-50,6),p(cx,-50,6),`${state.gap} mm GAP`,colors.lime);
+  }
+  function draw(now) {
+    if(resizePending) resize();
+    ctx.setTransform(scale,0,0,scale,0,0);ctx.clearRect(0,0,width,height);
+    if(phase===1)sketch();if(phase===2)booleanStudy();if(phase===3)plate();if(phase===4)hardware();
+    // A subtle edge scan indicates recent edits only, and disappears with reduced motion.
+    if(pulse>.01&&!reducedMotion){ctx.strokeStyle=`rgba(142,231,220,${pulse*.17})`;ctx.lineWidth=1;ctx.strokeRect(.5,.5,width-1,height-1);}
+  }
+  function frame(now) {
+    if(document.hidden){lastTime=0;requestAnimationFrame(frame);return;}
+    const measuredMs=lastTime ? now-lastTime : 0,dt=measuredMs?Math.min(measuredMs/1000,.1):0;lastTime=now;
+    if(measuredMs>0){frames++;frameDuration+=measuredMs;timingSamples.push(measuredMs);}
+    for(const key of Object.keys(animated))animated[key]=lerpTime(animated[key],state[key],dt,11,reducedMotion);
+    pulse=lerpTime(pulse,0,dt,4,reducedMotion);draw(now);
+    if(!lastMetricsTime)lastMetricsTime=now;
+    if(now-lastMetricsTime>=1000&&frames){const stats=frameStatistics(timingSamples),meanMs=stats.frameMs;$('fps').textContent=stats.fps.toFixed(0);const ceiling=Math.min(devicePixelRatio||1,2),nextScale=resolutionScale(scale,meanMs,ceiling);if(Math.abs(nextScale-scale)>.001){scale=nextScale;resizePending=true;}$('resolution').textContent=`DRS ${scale.toFixed(2)}×`;$('fps').title=`Measured ${frames} frame intervals, mean ${meanMs.toFixed(2)} ms, p95 ${stats.p95FrameMs.toFixed(2)} ms. Target 60 FPS.`;globalThis.CortexPerformance=Object.freeze({...stats,scale,viewport:{width,height},devicePixelRatio:devicePixelRatio||1,samples:frames,reducedMotion,phase});frames=0;frameDuration=0;timingSamples=[];lastMetricsTime=now;}
+    requestAnimationFrame(frame);
+  }
+  const hashPhase=/^#phase-([1-4])$/.exec(location.hash);changePhase(hashPhase?Number(hashPhase[1]):initialPhase,false);requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

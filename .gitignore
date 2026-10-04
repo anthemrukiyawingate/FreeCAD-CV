@@ -1,0 +1,41 @@
+# Python bytecode, package metadata, and caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.ipynb_checkpoints/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+coverage/
+
+# Isolated environments and installed dependencies
+.venv/
+venv/
+env/
+ENV/
+node_modules/
+
+# Generated delivery/build output
+build/
+dist/
+out/
+artifacts/
+*.tsbuildinfo
+
+# Local credentials and native CAD output
+.env
+.env.*
+!.env.example
+*.FCStd
+*.FCStd1
+*.stl
+*.step
+*.log

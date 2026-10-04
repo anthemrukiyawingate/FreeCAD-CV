@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CortexCAD capstone complete dimension record",
+  "description": "Finite numeric millimetres only. This schema covers scalar fields; cortexcad.recipes.validate_parameters enforces cross-field geometry relations. Example dimensions are not hardware compatibility evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "plate_length",
+    "plate_width",
+    "plate_thickness",
+    "mount_pitch_x",
+    "mount_pitch_y",
+    "fastener_diameter",
+    "edge_margin",
+    "bracket_height",
+    "sensor_length",
+    "sensor_width",
+    "sensor_height",
+    "clearance",
+    "wall",
+    "cable_diameter",
+    "lens_diameter"
+  ],
+  "properties": {
+    "plate_length": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "plate_width": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "plate_thickness": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "mount_pitch_x": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "mount_pitch_y": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "fastener_diameter": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "edge_margin": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "bracket_height": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "sensor_length": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "sensor_width": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "sensor_height": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "clearance": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 10
+    },
+    "wall": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 20
+    },
+    "cable_diameter": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    },
+    "lens_diameter": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 2000
+    }
+  }
+}
